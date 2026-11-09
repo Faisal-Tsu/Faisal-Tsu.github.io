@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mian Faisal Majeed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: sticky tab bar over a single 44rem reading column; data in mono, warm amber accent on cool paper. */
+  :root {
+    --bg: #F2F5F3;
+    --surface: #FFFFFF;
+    --fg: #17201D;
+    --muted: #5A6762;
+    --line: #D8E0DC;
+    --accent: #8A5A0B;
+    --accent-soft: #F2E6CD;
+
+    --display: "Spectral", Georgia, "Times New Roman", serif;
+    --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --col: 44rem;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111614;
+      --surface: #19211E;
+      --fg: #E8EDEA;
+      --muted: #9AA8A2;
+      --line: #2A3531;
+      --accent: #E0A94A;
+      --accent-soft: #332813;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111614;
+    --surface: #19211E;
+    --fg: #E8EDEA;
+    --muted: #9AA8A2;
+    --line: #2A3531;
+    --accent: #E0A94A;
+    --accent-soft: #332813;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--body);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0 0 auto;
+    height: env(safe-area-inset-top, 0px);
+    background: var(--surface);
+    z-index: 10;
+  }
+
+  .gutter {
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .col { max-width: var(--col); margin: 0 auto; }
+
+  a { color: var(--accent); text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* ---- masthead ---- */
+  .masthead { padding-block: 2.75rem 1.5rem; }
+  h1 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(2.1rem, 6.5vw, 2.9rem);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .alt-name {
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    color: var(--muted);
+    margin: 0.4rem 0 0.9rem;
+  }
+  .standfirst {
+    font-family: var(--display);
+    font-size: clamp(1.05rem, 2.5vw, 1.2rem);
+    line-height: 1.5;
+    margin: 0 0 1rem;
+    max-width: 38rem;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 1.3rem;
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    color: var(--muted);
+  }
+  .meta span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex: none; }
+
+  /* ---- tab bar ---- */
+  .tabbar {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 9;
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .tabs {
+    display: flex;
+    gap: 0.2rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin: 0 auto;
+    max-width: var(--col);
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tabs a {
+    font-family: var(--mono);
+    font-size: 0.73rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.85rem 0.7rem;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+  .tabs a:hover { color: var(--fg); }
+  .tabs a[aria-current="page"] { color: var(--accent); border-bottom-color: var(--accent); }
+
+  main { padding-block: 2.25rem 4rem; }
+
+  /* ---- sections ---- */
+  .block { margin-bottom: 2.5rem; }
+  .block:last-child { margin-bottom: 0; }
+  .block + .block { border-top: 1px solid var(--line); padding-top: 1.8rem; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.69rem;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: var(--muted);
+    margin: 0 0 0.9rem;
+  }
+  h2 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.4rem;
+    line-height: 1.25;
+    margin: 0 0 0.7rem;
+    text-wrap: balance;
+  }
+  h3 { font-family: var(--body); font-weight: 600; font-size: 0.96rem; margin: 0 0 0.25rem; }
+  p { margin: 0 0 1rem; max-width: 38rem; }
+  p:last-child { margin-bottom: 0; }
+
+  .plain { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.1rem; }
+  .plain p { margin: 0.25rem 0 0; font-size: 0.93rem; color: var(--muted); }
+
+  /* ---- photos ---- */
+  .photo { margin: 1.5rem 0 0; }
+  .photo img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    background: var(--surface);
+  }
+  .photo.banner { margin: 0; }
+  .photo.banner img { aspect-ratio: 16 / 9; object-fit: cover; object-position: 50% 42%; }
+  .pair {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    gap: 0.9rem;
+    margin: 1.5rem 0 0;
+  }
+  .pair figure { margin: 0; }
+  .pair img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+  }
+
+  /* ---- finding panel ---- */
+  .finding {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 1.3rem;
+    margin: 1.4rem 0;
+  }
+  .finding-lede { font-size: 0.92rem; color: var(--muted); margin: 0 0 0.9rem; max-width: 34rem; }
+  .genes { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 0; padding: 0; list-style: none; }
+  .genes li {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    font-weight: 500;
+    padding: 0.3rem 0.6rem;
+    border: 1px solid var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-radius: 2px;
+  }
+
+  figure { margin: 1.5rem 0 0; }
+  figure svg { display: block; width: 100%; height: auto; max-width: 100%; }
+  figcaption {
+    font-family: var(--mono);
+    font-size: 0.71rem;
+    line-height: 1.5;
+    color: var(--muted);
+    margin-top: 0.55rem;
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    margin: 1.4rem 0 0;
+    overflow: hidden;
+  }
+  .facts div { background: var(--surface); padding: 0.9rem 1rem; }
+  .facts dt {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin: 0 0 0.3rem;
+  }
+  .facts dd {
+    font-family: var(--mono);
+    font-size: 1rem;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    margin: 0;
+  }
+
+  /* ---- entries ---- */
+  .entry { padding: 1.05rem 0; border-bottom: 1px solid var(--line); }
+  .entry:first-of-type { padding-top: 0; }
+  .entry:last-of-type { border-bottom: 0; padding-bottom: 0; }
+  .entry p { margin: 0.3rem 0 0; font-size: 0.93rem; color: var(--muted); }
+  .when {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin: 0 0 0.25rem;
+  }
+  .cite { font-size: 0.93rem; line-height: 1.55; margin: 0; max-width: 38rem; }
+  .status {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.67rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    padding: 0.1rem 0.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .tools { display: grid; gap: 1rem; margin: 0; }
+  .tools > div { display: grid; grid-template-columns: 11rem 1fr; gap: 0.35rem 1.2rem; align-items: baseline; }
+  .tools dt {
+    font-family: var(--mono);
+    font-size: 0.71rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+  .tools dd { font-family: var(--mono); font-size: 0.83rem; margin: 0; min-width: 0; }
+  @media (max-width: 34rem) { .tools > div { grid-template-columns: 1fr; } }
+
+  .contact-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin: 0 0 0.8rem; }
+  .addr { font-family: var(--mono); font-size: 0.88rem; user-select: all; word-break: break-all; min-width: 0; }
+  button {
+    font-family: var(--mono);
+    font-size: 0.71rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 0.32rem 0.65rem;
+    cursor: pointer;
+  }
+  button:hover { border-color: var(--accent); color: var(--accent); }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding-block: 1.2rem 2rem;
+    font-family: var(--mono);
+    font-size: 0.71rem;
+    color: var(--muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  html { color-scheme: light dark; }
+  img { max-width: 100%; }
+</style>
+</head>
+<body>
+
+<header class="masthead gutter">
+  <div class="col">
+    <h1>Mian Faisal Majeed</h1>
+    <p class="alt-name">publishes as M.F. Majeed</p>
+    <p class="standfirst">Bioinformatician working on plant comparative genomics: how biosynthetic pathways are built, conserved and lost across lineages, and what that means for crop seed chemistry.</p>
+    <div class="meta">
+      <span><i class="dot"></i>MSc Bioinformatics, Tomsk State University</span>
+      <span><i class="dot"></i>BSc (Hons) Agriculture, UAF</span>
+      <span><i class="dot"></i><a href="https://orcid.org/0009-0004-8231-0260">ORCID 0009-0004-8231-0260</a></span>
+    </div>
+  </div>
+</header>
+
+<nav class="tabbar gutter" aria-label="Sections">
+  <div class="tabs" id="tabs">
+    <a href="#about" data-tab="about">About</a>
+    <a href="#research" data-tab="research">Research</a>
+    <a href="#experience" data-tab="experience">Experience &amp; education</a>
+    <a href="#publications" data-tab="publications">Publications</a>
+    <a href="#methods" data-tab="methods">Methods</a>
+  </div>
+</nav>
+
+<main class="gutter">
+  <div class="col">
+
+    <!-- ===== ABOUT ===== -->
+    <section id="panel-about" data-panel="about">
+      <figure class="photo banner">
+        <img src="img/bench.jpg" alt="Weighing ground soybean seed on an analytical balance in the laboratory at Tomsk State University.">
+        <figcaption>Weighing ground seed for methanol extraction, ahead of RP-HPLC-DAD quantification.</figcaption>
+      </figure>
+
+      <div class="block" style="margin-top:1.8rem">
+        <p class="eyebrow">About</p>
+        <h2>Pathway evolution, and the chemistry it produces in seed</h2>
+        <p>My work sits between two scales that rarely meet. At the deep end, I reconstruct gene family histories across divergent plant lineages to ask which enzymes a pathway requires everywhere and which ones a single family invented. At the applied end, I measure what those pathways actually produce in crop seed, by chromatography, in material a breeder could select from.</p>
+        <p>I finished an MSc in Bioinformatics at National Research Tomsk State University in September 2026, supervised by Dr. Muhammad Amjad Nawaz. Before that I spent two years flying agricultural drones in Pakistan, and before that took a BSc in Agriculture. The route into computational biology ran through the field rather than around it.</p>
+      </div>
+
+      <div class="block">
+        <p class="eyebrow">What drives me</p>
+        <ul class="plain">
+          <li>
+            <h3>Where the data disagree</h3>
+            <p>In soybean, isoflavone content differs several-fold between varieties while the enzymes that make them are conserved and under purifying selection in every species I examined. Conserved enzymes and variable chemistry only reconcile if the variation sits in regulation. That is the question I want to take into a PhD.</p>
+          </li>
+          <li>
+            <h3>Methods that travel</h3>
+            <p>Ortholog and paralog inference, selection testing, expression analysis and structure comparison are not tied to one organism. I would rather learn a new system than narrow to one crop.</p>
+          </li>
+          <li>
+            <h3>Work that reaches a field</h3>
+            <p>Breeders still select for seed isoflavone content by sending samples for chemical analysis. A validated marker would shorten that cycle. Having worked on farms, I care which end of the pipeline the result lands on.</p>
+          </li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <p class="eyebrow">Beyond the lab</p>
+        <p>More than 350 flight hours on XAG and DJI heavy-lift platforms, spraying and aerial imaging over potato, maize, sugarcane, wheat and Rhodes grass. It is the reason I think like an agronomist when deciding what is worth measuring, and why field trials in a project proposal do not worry me.</p>
+        <figure class="photo">
+          <img src="img/drone.jpg" alt="Flying a heavy-lift agricultural drone over a field at sunset in Pakistan.">
+          <figcaption>Early-morning spray run, Punjab, Pakistan.</figcaption>
+        </figure>
+        <p style="margin-top:1.5rem">Four winters and summers in Tomsk since, which is its own kind of fieldwork.</p>
+        <div class="pair">
+          <figure>
+            <img src="img/snow.jpg" alt="Standing with an umbrella beside a frozen river in heavy snow in Tomsk.">
+          </figure>
+          <figure>
+            <img src="img/swing.jpg" alt="Sitting on a rope swing on a bright summer day outside Tomsk.">
+          </figure>
+        </div>
+      </div>
+
+      <div class="block">
+        <p class="eyebrow">Contact</p>
+        <div class="contact-row">
+          <span class="addr" id="addr">mianfaysalmajeed@gmail.com</span>
+          <button id="copy" type="button">Copy</button>
+        </div>
+        <p>Open to PhD positions in plant comparative genomics, gene family evolution and crop metabolite genetics. English, native Urdu and Punjabi, basic Russian.</p>
+      </div>
+    </section>
+
+    <!-- ===== RESEARCH ===== -->
+    <section id="panel-research" data-panel="research" hidden>
+      <div class="block">
+        <p class="eyebrow">MSc thesis &middot; defended 14 September 2026</p>
+        <h2>Phylogenomic and structural characterization of the isoflavonoid biosynthesis pathway across divergent plant lineages</h2>
+        <p>Nineteen gene families traced across 22 species, 14 of them legumes and 8 non-legume outgroups, to separate the conserved phenylpropanoid core from the steps restricted to the Fabaceae. Supervised by Dr. Muhammad Amjad Nawaz at Tomsk State University.</p>
+
+        <div class="finding">
+          <p class="finding-lede">Six of the nineteen genes were recovered only in Fabaceae. The rest, including the chalcone reductase often assumed to be legume-specific, have orthologs outside the family.</p>
+          <ul class="genes">
+            <li>IFS</li><li>IFR</li><li>F6H</li><li>HID</li><li>IF7GT</li><li>IF7MAT</li>
+          </ul>
+        </div>
+
+        <dl class="facts">
+          <div><dt>Gene families</dt><dd>19</dd></div>
+          <div><dt>Species</dt><dd>22</dd></div>
+          <div><dt>Curated sequences</dt><dd>1,963</dd></div>
+          <div><dt>dN/dS (&omega;)</dt><dd>0.053&ndash;0.330</dd></div>
+        </dl>
+
+        <figure>
+          <svg viewBox="0 0 640 188" role="img" aria-label="Schematic cladogram: all nineteen isoflavonoid genes are recovered in the Fabaceae clade, while other lineages carry only the phenylpropanoid core.">
+            <g fill="none" stroke="var(--line)" stroke-width="1.5" stroke-linecap="square">
+              <path d="M28 94 H70"/>
+              <path d="M70 34 V154"/>
+              <path d="M70 154 H118"/>
+              <path d="M118 94 V154"/>
+              <path d="M118 94 H176"/>
+              <path d="M118 154 H176"/>
+            </g>
+            <g fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="square">
+              <path d="M70 34 H176"/>
+            </g>
+            <circle cx="176" cy="34" r="4" fill="var(--accent)"/>
+            <circle cx="176" cy="94" r="3.5" fill="var(--line)"/>
+            <circle cx="176" cy="154" r="3.5" fill="var(--line)"/>
+            <text x="190" y="30" font-family="IBM Plex Sans, sans-serif" font-size="13" font-weight="600" fill="var(--fg)">Fabaceae</text>
+            <text x="190" y="47" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--accent)">19 of 19 genes recovered</text>
+            <text x="190" y="90" font-family="IBM Plex Sans, sans-serif" font-size="13" font-weight="600" fill="var(--fg)">Other dicots &amp; monocots</text>
+            <text x="190" y="107" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--muted)">phenylpropanoid core only</text>
+            <text x="190" y="150" font-family="IBM Plex Sans, sans-serif" font-size="13" font-weight="600" fill="var(--fg)">Basal lineages</text>
+            <text x="190" y="167" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--muted)">outgroup rooting</text>
+          </svg>
+          <figcaption>Schematic, not drawn to branch length. Gene trees were inferred in IQ-TREE from MAFFT alignments and rooted programmatically; IFR required midpoint rooting after a long-branch <i>Amborella</i> tip was removed.</figcaption>
+        </figure>
+      </div>
+
+      <div class="block">
+        <p class="eyebrow">Experimental arm</p>
+        <h2>Isoflavone quantification in soybean seed</h2>
+        <p>Six isoflavones quantified by RP-HPLC-DAD in seed of 20 soybean varieties, following AOAC 2001.10: a C18 column at 30&nbsp;&deg;C, acetonitrile against 0.1% phosphoric acid over a 50-minute gradient, detection at 254&nbsp;nm. External-standard calibration gave R&sup2;&nbsp;=&nbsp;0.999 across five levels. Daidzin, glycitin and genistin elute before their aglycones, and the malonyl conjugates dominate the free forms by two orders of magnitude, consistent with IF7GT and IF7MAT being among the Fabaceae-restricted steps.</p>
+        <figure class="photo">
+          <img src="img/mortar.jpg" alt="Ground plant material in a mortar beside a flask of yellow extract on a laboratory bench.">
+          <figcaption>Extract preparation. The colour is the pathway's own: flavonoids take their name from <i>flavus</i>, yellow.</figcaption>
+        </figure>
+      </div>
+
+      <div class="block">
+        <p class="eyebrow">Collaboration</p>
+        <h2>Soybean responses to biotic stress</h2>
+        <p>Public RNA-seq datasets covering fungal, bacterial, viral and insect attack were integrated to separate pathogen class-specific transcriptional responses from a shared response network. Second author on the resulting manuscript, under review at <i>Oil Crop Science</i>, with Dr. Nawaz as corresponding author.</p>
+      </div>
+    </section>
+
+    <!-- ===== EXPERIENCE ===== -->
+    <section id="panel-experience" data-panel="experience" hidden>
+      <div class="block">
+        <p class="eyebrow">Education</p>
+        <div class="entry">
+          <p class="when">November 2024 &ndash; September 2026</p>
+          <h3>MSc Bioinformatics</h3>
+          <p>National Research Tomsk State University, Russia. Thesis defended 14 September 2026, supervised by Dr. Muhammad Amjad Nawaz. Open Doors Scholarship, top 5% of the programme.</p>
+        </div>
+        <div class="entry">
+          <p class="when">September 2018 &ndash; August 2022</p>
+          <h3>BSc (Hons) Agriculture</h3>
+          <p>University of Agriculture Faisalabad, Pakistan.</p>
+        </div>
+      </div>
+
+      <div class="block">
+        <p class="eyebrow">Research experience</p>
+        <div class="entry">
+          <p class="when">March &ndash; May 2022</p>
+          <h3>Research intern, Ayub Agricultural Research Institute</h3>
+          <p>Faisalabad, Pakistan. Maize phenotyping across an eleven-week breeding trial, and controlled pollinations for the breeding programme.</p>
+        </div>
+      </div>
+
+      <div class="block">
+        <p class="eyebrow">Field and professional experience</p>
+        <div class="entry">
+          <p class="when">August 2023 &ndash; September 2024</p>
+          <h3>Agriculture drones instructor, Sapphire Farms Services</h3>
+          <p>Sahiwal, Pakistan. Planned and flew precision spraying missions for clients from smallholders to corporate farms, calibrated DJI T16, T20 and T30 platforms to crop and field conditions, and collected aerial RGB imagery to flag problem areas for the agronomy team.</p>
+        </div>
+        <div class="entry">
+          <p class="when">June 2022 &ndash; August 2023</p>
+          <h3>Farm consultant, Sapphire Farms Services</h3>
+          <p>More than 350 flight hours on XAG and DJI T16/T20/T30/T40 heavy-lift drones. Aerial spray operations on sugarcane at JDW and JK Sugar Mills, advising growers on spray efficiency through flow rate, droplet size and swath width. Represented Sapphire in the Centrigo Farming Ecosystem in Okara.</p>
+        </div>
+        <div class="entry">
+          <p class="when">May 2020 &ndash; August 2021</p>
+          <h3>Assistant manager, Al Tayyab Foods</h3>
+          <p>Lahore, Pakistan. Qualitative and quantitative quality checks on agricultural commodities, with weekly reporting on stock quality and quantity.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PUBLICATIONS ===== -->
+    <section id="panel-publications" data-panel="publications" hidden>
+      <div class="block">
+        <p class="eyebrow">Publications and manuscripts</p>
+        <h2>Three items, listed at their real status</h2>
+        <p>Nothing below is published yet. Statuses are given as they stand and will be updated as they change.</p>
+
+        <div class="entry" style="margin-top:1.3rem">
+          <span class="status">Under review</span>
+          <p class="cite">George U.E., <strong>Majeed M.F.</strong>, Shafiq M., Ali M.A., Ercisli S., Tsatsakis A.M., Golokhvast K.S., Nawaz M.A. Integrative transcriptomic analysis reveals pathogen class-specific transcriptional reprogramming and a common network architecture in soybean biotic stress responses. <i>Oil Crop Science</i>. Second author.</p>
+        </div>
+
+        <div class="entry">
+          <span class="status">In preparation</span>
+          <p class="cite"><strong>Majeed M.F.</strong> et al. A conserved phenylpropanoid core and six Fabaceae-restricted genes define the isoflavonoid pathway across 22 plant species. First author.</p>
+        </div>
+
+        <div class="entry">
+          <span class="status">Book chapter</span>
+          <p class="cite">Machine Learning in Plant Breeding, Genetics and Seed Technology: Application of machine learning techniques. <strong>Majeed M.F.</strong>, second author.</p>
+        </div>
+      </div>
+
+      <div class="block">
+        <p class="eyebrow">Profiles</p>
+        <p><a href="https://orcid.org/0009-0004-8231-0260">ORCID 0009-0004-8231-0260</a></p>
+      </div>
+    </section>
+
+    <!-- ===== METHODS ===== -->
+    <section id="panel-methods" data-panel="methods" hidden>
+      <div class="block">
+        <p class="eyebrow">Methods</p>
+        <h2>What I work with</h2>
+        <p>Each line below appears in the thesis or in the manuscripts above. Tools I have only read about are not listed.</p>
+        <dl class="tools" style="margin-top:1.4rem">
+          <div><dt>Phylogenomics</dt><dd>MAFFT &middot; IQ-TREE &middot; PAL2NAL &middot; PAML codeml &middot; KaKs_Calculator &middot; iTOL</dd></div>
+          <div><dt>Sequence analysis</dt><dd>BLAST+ &middot; MEME &middot; ncbi-datasets &middot; Entrez Direct</dd></div>
+          <div><dt>Transcriptomics</dt><dd>RNA-seq meta-analysis &middot; differential expression &middot; co-expression networks</dd></div>
+          <div><dt>Structure</dt><dd>structure prediction &middot; superposition &middot; motif mapping</dd></div>
+          <div><dt>Computing</dt><dd>Python &middot; R &middot; Bash &middot; Linux &middot; conda</dd></div>
+          <div><dt>Analytical</dt><dd>RP-HPLC-DAD &middot; LC-MS &middot; GC-MS &middot; UV-Vis &middot; IR</dd></div>
+          <div><dt>Field</dt><dd>UAV operation (DJI, XAG) &middot; aerial imaging &middot; phenotyping</dd></div>
+        </dl>
+      </div>
+
+      <div class="block">
+        <p class="eyebrow">Languages</p>
+        <dl class="tools">
+          <div><dt>Native</dt><dd>Urdu &middot; Punjabi</dd></div>
+          <div><dt>Working</dt><dd>English</dd></div>
+          <div><dt>Basic</dt><dd>Russian</dd></div>
+        </dl>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="gutter">
+  <div class="col">Last updated November 2026</div>
+</footer>
+
+<script>
+  (function () {
+    var VALID = ['about', 'research', 'experience', 'publications', 'methods'];
+    var links = Array.prototype.slice.call(document.querySelectorAll('#tabs a'));
+    var panels = Array.prototype.slice.call(document.querySelectorAll('[data-panel]'));
+
+    function show(name) {
+      if (VALID.indexOf(name) === -1) { name = 'about'; }
+      panels.forEach(function (p) { p.hidden = (p.getAttribute('data-panel') !== name); });
+      links.forEach(function (a) {
+        if (a.getAttribute('data-tab') === name) { a.setAttribute('aria-current', 'page'); }
+        else { a.removeAttribute('aria-current'); }
+      });
+    }
+
+    function current() {
+      return (window.location.hash || '').replace(/^#/, '');
+    }
+
+    show(current());
+    window.addEventListener('hashchange', function () {
+      show(current());
+      window.scrollTo(0, 0);
+    });
+
+    var btn = document.getElementById('copy');
+    var addr = document.getElementById('addr');
+    if (btn && addr) {
+      btn.addEventListener('click', function () {
+        var text = addr.textContent.trim();
+        var done = function () {
+          btn.textContent = 'Copied';
+          setTimeout(function () { btn.textContent = 'Copy'; }, 1600);
+        };
+        var fallback = function () {
+          try {
+            var r = document.createRange();
+            r.selectNodeContents(addr);
+            var s = window.getSelection();
+            s.removeAllRanges();
+            s.addRange(r);
+            btn.textContent = 'Selected';
+            setTimeout(function () { btn.textContent = 'Copy'; }, 1600);
+          } catch (e) { /* leave the button as it is */ }
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done, fallback);
+        } else {
+          fallback();
+        }
+      });
+    }
+  })();
+</script>
+</body>
+</html>
